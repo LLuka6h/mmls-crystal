@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programare M.M.L.S</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url("https://media.discordapp.net/attachments/1111002000990158921/1522197444647976960/image.png?ex=6a479857&is=6a4646d7&hm=cd55a45227772f922135524dbe589dcae988c4580e9d36b35d6e646d0fba6f16&=&format=webp&quality=lossless");
+            background-size: cover;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            padding: 40px;
+            background: rgba(128, 128, 128, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h4 {
+            text-align: center;
+            font-size: 38px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #F5F5F5;
+            border: none;
+            border-radius: 8px;
+            color: #333333;
+            font-size: 16px;
+        }
+
+        form input:focus,
+        form textarea:focus {
+            outline: none;
+            border: 2px solid #FF4B4B;
+        }
+
+        form textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        #submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FF4B4B, #FF0000);
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        #submit:hover {
+            background: linear-gradient(135deg, #ff6b6b, #ff3333);
+            transform: translateY(-3px);
+        }
+
+        #submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        small {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        form input:not(:last-child),
+        form textarea {
+            border-bottom: 2px solid #cccccc;
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px;
+            }
+
+            h4 {
+                font-size: 30px;
+            }
+
+            #submit {
+                font-size: 16px;
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FF4B4B;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #FF3333;
+        }
+
+        .back-button {
+            display: block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #FF4B4B;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #ff6b6b;
+        }
+
+        #custom-alert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        #custom-alert h5 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        #custom-alert button {
+            background: #FF4B4B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #custom-alert button:hover {
+            background: #FF6B6B;
+        }
+
+        #custom-alert-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Inapoi</a>
+        <h4>Programare M.M.L.S</h4>
+
+        <form name="contact-form" id="contact-form">
+            <input type="text" name="NUME" placeholder="Nume Prenume" required>
+            <input type="number" name="ID" placeholder="CNP (ID)" required>
+            <input type="text" name="NUME AFACERE" placeholder="Numele afacerii" required>
+            <input type="text" id="NUMAR_TEL" name="NUMAR DE TEL" placeholder="Numar de telefon (ex. 123-4567)" required maxlength="8">
+            <input type="text" name="EMAIL" placeholder="Email (nume discord)" required>
+            <input type="text" name="AFACERE" placeholder="Tipul de afacere (Service, Frizerie, etc...)" required>
+            <input type="text" name="ADRESA" placeholder="Adresa afacerii, cat mai in detaliu" required minlength="10">
+            <textarea name="DETALII" rows="5" placeholder="Detalii extra"></textarea>
+            <input type="submit" value="Trimite Formularul" id="submit">
+        </form>
+
+        <small>Pentru intrebari sau alte probleme, contactați: @r0tby707</small>
+        <small>Copyright © 2026 Spitalul Judetean Los Santos</small>
+    </div>
+
+    <div id="custom-alert-overlay"></div>
+    <div id="custom-alert">
+        <h5>Multumim!</h5>
+        <h5>Cererea dvs a fost inregistrata in baza noastra de date.</h5>
+        <button id="close-alert">OK</button>
+    </div>
+
+   <script>
+    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1522200985097867457/RJUaqsgoWKfbSFBM4QVXz4N8dSsSYc9520JI8vJq0WNs50mL2K8Zg7_y72MZU6oyj-0A';
+
+    const phoneInput = document.getElementById('NUMAR_TEL');
+
+    phoneInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+
+        if (value.length > 3) {
+            value = value.slice(0, 3) + '-' + value.slice(3, 7);
+        }
+
+        e.target.value = value;
+    });
+
+    const form = document.forms['contact-form'];
+    const submitButton = document.getElementById('submit');
+    const customAlert = document.getElementById('custom-alert');
+    const customOverlay = document.getElementById('custom-alert-overlay');
+    const closeAlertButton = document.getElementById('close-alert');
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        submitButton.disabled = true;
+        submitButton.value = 'Se trimite...';
+
+        const formData = new FormData(form);
+
+        const nume = formData.get('NUME');
+        const id = formData.get('ID');
+        const numeAfacere = formData.get('NUME AFACERE');
+        const numarTel = formData.get('NUMAR DE TEL');
+        const email = formData.get('EMAIL');
+        const afacere = formData.get('AFACERE');
+        const adresa = formData.get('ADRESA');
+        const detalii = formData.get('DETALII') || 'Nu au fost oferite detalii extra.';
+
+        const payload = {
+            username: 'Programare M.M.L.S [HR]',
+            avatar_url: 'https://cdn-icons-png.flaticon.com/512/2966/2966327.png',
+
+            content: '<@&1483581918665506828> Ai primit o programare noua M.M.L.S.',
+
+            allowed_mentions: {
+                roles: ['1483581918665506828']
+            },
+
+            embeds: [
+                {
+                    title: 'Programare noua M.M.L.S',
+                    color: 16711680,
+                    fields: [
+                        {
+                            name: 'Nume Prenume',
+                            value: String(nume),
+                            inline: true
+                        },
+                        {
+                            name: 'CNP / ID',
+                            value: String(id),
+                            inline: true
+                        },
+                        {
+                            name: 'Numar de telefon',
+                            value: String(numarTel),
+                            inline: true
+                        },
+                        {
+                            name: 'Email / Discord',
+                            value: String(email),
+                            inline: true
+                        },
+                        {
+                            name: 'Numele afacerii',
+                            value: String(numeAfacere),
+                            inline: false
+                        },
+                        {
+                            name: 'Tipul afacerii',
+                            value: String(afacere),
+                            inline: false
+                        },
+                        {
+                            name: 'Adresa afacerii',
+                            value: String(adresa),
+                            inline: false
+                        },
+                        {
+                            name: 'Detalii extra',
+                            value: String(detalii),
+                            inline: false
+                        }
+                    ],
+                    footer: {
+                        text: 'Formular trimis de pe site'
+                    },
+                    timestamp: new Date().toISOString()
+                }
+            ]
+        };
+
+        try {
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error('Webhook-ul nu a putut trimite mesajul.');
+            }
+
+            customOverlay.style.display = 'block';
+            customAlert.style.display = 'block';
+        } catch (error) {
+            alert('A aparut o eroare la trimiterea formularului. Verifica webhook-ul.');
+            console.error('Eroare webhook:', error);
+        } finally {
+            submitButton.disabled = false;
+            submitButton.value = 'Trimite Formularul';
+        }
+    });
+
+    closeAlertButton.addEventListener('click', function () {
+        customAlert.style.display = 'none';
+        customOverlay.style.display = 'none';
+        window.location.reload();
+    });
+
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'F12') {
+            e.preventDefault();
+            return false;
+        }
+
+        if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
+            e.preventDefault();
+            return false;
+        }
+
+        if (e.ctrlKey && ['U', 'S'].includes(e.key.toUpperCase())) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    document.addEventListener('dragstart', function (e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('selectstart', function (e) {
+        e.preventDefault();
+    });
+</script>
+</body>
+
+</html>
