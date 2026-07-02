@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programari Chirurgie Plastica</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url("https://media.discordapp.net/attachments/1111002000990158921/1522197444647976960/image.png?ex=6a479857&is=6a4646d7&hm=cd55a45227772f922135524dbe589dcae988c4580e9d36b35d6e646d0fba6f16&=&format=webp&quality=lossless");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            padding: 40px;
+            background: rgba(128, 128, 128, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h4 {
+            text-align: center;
+            font-size: 38px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #F5F5F5;
+            border: none;
+            border-radius: 8px;
+            color: #333333;
+            font-size: 16px;
+            border-bottom: 2px solid #cccccc;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            outline: none;
+            border: 2px solid #FF4B4B;
+        }
+
+        form textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        .file-label {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 8px;
+            background-color: #F5F5F5;
+            border-radius: 8px;
+            color: #333333;
+            font-size: 16px;
+            border-bottom: 2px solid #cccccc;
+        }
+
+        .file-info {
+            display: block;
+            margin-top: -5px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        #submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FF4B4B, #FF0000);
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        #submit:hover {
+            background: linear-gradient(135deg, #ff6b6b, #ff3333);
+            transform: translateY(-3px);
+        }
+
+        #submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        small {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px;
+            }
+
+            h4 {
+                font-size: 30px;
+            }
+
+            #submit {
+                font-size: 16px;
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FF4B4B;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #FF3333;
+        }
+
+        .back-button {
+            display: block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #FF4B4B;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #ff6b6b;
+        }
+
+        #custom-alert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        #custom-alert h5 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        #custom-alert button {
+            background: #FF4B4B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #custom-alert button:hover {
+            background: #FF6B6B;
+        }
+
+        #custom-alert-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Inapoi</a>
+        <h4>Programari Chirurgie Plastica</h4>
+
+        <form name="contact-form" id="contact-form">
+            <input type="text" name="NUME_PRENUME" placeholder="Nume Prenume" required>
+            <input type="number" name="CNP" placeholder="CNP" required>
+            <input type="number" name="VARSTA" placeholder="Varsta" required min="1">
+            <input type="number" name="KILOGRAME" placeholder="Kilograme (kg)" required min="1">
+            <input type="number" name="INALTIME" placeholder="Inaltime (cm)" required min="1">
+            <input type="number" name="LUNI_ORAS" placeholder="Luni in oras" required min="0">
+
+            <textarea name="PROBLEME_SANATATE" rows="5" placeholder="Probleme de sanatate (daca se stie)"></textarea>
+            <textarea name="ALERGII_MEDICAMENTE" rows="5" placeholder="Alergii la medicamente (daca se stie)"></textarea>
+            <textarea name="TRATAMENT_DOMICILIU" rows="5" placeholder="Tratament la domiciliu (daca se stie)"></textarea>
+
+            <label class="file-label">
+                Poza cu buletinul:
+                <input type="file" id="POZA_BULETIN" name="POZA_BULETIN" accept="image/*" required>
+            </label>
+            <small class="file-info">Se accepta doar poza / imagine.</small>
+
+            <select name="ACORD_OPERATIE" required>
+                <option value="" disabled selected>
+                    Am luat la cunostinta ca aceasta operatie se poate face o singura data, este ireversibila, iar banii nu se pot obtine inapoi
+                </option>
+                <option value="Da">Da</option>
+            </select>
+
+            <input type="submit" value="Trimite Formularul" id="submit">
+        </form>
+
+        <small>Pentru intrebari sau alte probleme, contactați: @r0tby707</small>
+        <small>Copyright © 2026 Spitalul Judetean Los Santos</small>
+    </div>
+
+    <div id="custom-alert-overlay"></div>
+    <div id="custom-alert">
+        <h5>Multumim!</h5>
+        <h5>Cererea dvs a fost inregistrata in baza noastra de date.</h5>
+        <button id="close-alert">OK</button>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = 'PUNE_AICI_WEBHOOK_UL_TAU';
+
+        const form = document.forms['contact-form'];
+        const submitButton = document.getElementById('submit');
+        const customAlert = document.getElementById('custom-alert');
+        const customOverlay = document.getElementById('custom-alert-overlay');
+        const closeAlertButton = document.getElementById('close-alert');
+
+        function safeValue(value) {
+            if (!value || String(value).trim() === '') {
+                return 'Nu a fost completat.';
+            }
+
+            let text = String(value).trim();
+
+            if (text.length > 1000) {
+                text = text.substring(0, 1000) + '...';
+            }
+
+            return text;
+        }
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            submitButton.disabled = true;
+            submitButton.value = 'Se trimite...';
+
+            const formData = new FormData(form);
+
+            const numePrenume = formData.get('NUME_PRENUME');
+            const cnp = formData.get('CNP');
+            const varsta = formData.get('VARSTA');
+            const kilograme = formData.get('KILOGRAME');
+            const inaltime = formData.get('INALTIME');
+            const luniOras = formData.get('LUNI_ORAS');
+            const problemeSanatate = formData.get('PROBLEME_SANATATE');
+            const alergiiMedicamente = formData.get('ALERGII_MEDICAMENTE');
+            const tratamentDomiciliu = formData.get('TRATAMENT_DOMICILIU');
+            const acordOperatie = formData.get('ACORD_OPERATIE');
+            const pozaBuletin = document.getElementById('POZA_BULETIN').files[0];
+
+            if (!pozaBuletin) {
+                alert('Trebuie sa incarci poza cu buletinul.');
+                submitButton.disabled = false;
+                submitButton.value = 'Trimite Formularul';
+                return;
+            }
+
+            if (!pozaBuletin.type.startsWith('image/')) {
+                alert('Fisierul incarcat trebuie sa fie o imagine.');
+                submitButton.disabled = false;
+                submitButton.value = 'Trimite Formularul';
+                return;
+            }
+
+            const payload = {
+                username: 'Programari Chirurgie Plastica [HR]',
+                avatar_url: 'https://cdn-icons-png.flaticon.com/512/2966/2966327.png',
+
+                content: '<@&1483581918665506828> Ai primit o programare noua pentru Chirurgie Plastica.',
+
+                allowed_mentions: {
+                    roles: ['1483581918665506828']
+                },
+
+                embeds: [
+                    {
+                        title: 'Programare noua - Chirurgie Plastica',
+                        color: 16711680,
+                        fields: [
+                            {
+                                name: 'Nume Prenume',
+                                value: safeValue(numePrenume),
+                                inline: true
+                            },
+                            {
+                                name: 'CNP',
+                                value: safeValue(cnp),
+                                inline: true
+                            },
+                            {
+                                name: 'Varsta',
+                                value: safeValue(varsta),
+                                inline: true
+                            },
+                            {
+                                name: 'Kilograme (kg)',
+                                value: safeValue(kilograme),
+                                inline: true
+                            },
+                            {
+                                name: 'Inaltime (cm)',
+                                value: safeValue(inaltime),
+                                inline: true
+                            },
+                            {
+                                name: 'Luni in oras',
+                                value: safeValue(luniOras),
+                                inline: true
+                            },
+                            {
+                                name: 'Probleme de sanatate',
+                                value: safeValue(problemeSanatate),
+                                inline: false
+                            },
+                            {
+                                name: 'Alergii la medicamente',
+                                value: safeValue(alergiiMedicamente),
+                                inline: false
+                            },
+                            {
+                                name: 'Tratament la domiciliu',
+                                value: safeValue(tratamentDomiciliu),
+                                inline: false
+                            },
+                            {
+                                name: 'Acord operatie',
+                                value: safeValue(acordOperatie),
+                                inline: false
+                            },
+                            {
+                                name: 'Poza cu buletinul',
+                                value: 'Imagine atasata la mesaj.',
+                                inline: false
+                            }
+                        ],
+                        footer: {
+                            text: 'Formular trimis de pe site'
+                        },
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
+
+            const discordFormData = new FormData();
+            discordFormData.append('payload_json', JSON.stringify(payload));
+            discordFormData.append('files[0]', pozaBuletin, pozaBuletin.name);
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    body: discordFormData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Webhook-ul nu a putut trimite mesajul.');
+                }
+
+                customOverlay.style.display = 'block';
+                customAlert.style.display = 'block';
+            } catch (error) {
+                alert('A aparut o eroare la trimiterea formularului. Verifica webhook-ul.');
+                console.error('Eroare webhook:', error);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.value = 'Trimite Formularul';
+            }
+        });
+
+        closeAlertButton.addEventListener('click', function () {
+            customAlert.style.display = 'none';
+            customOverlay.style.display = 'none';
+            window.location.reload();
+        });
+
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+
+            if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
+                e.preventDefault();
+                return false;
+            }
+
+            if (e.ctrlKey && ['U', 'S'].includes(e.key.toUpperCase())) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('selectstart', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
