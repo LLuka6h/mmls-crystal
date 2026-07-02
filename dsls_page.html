@@ -227,6 +227,7 @@
         <form name="contact-form" id="contact-form">
             <input type="text" name="NUME_PRENUME" placeholder="Nume Prenume" required>
             <input type="number" name="CNP" placeholder="CNP" required>
+            <input type="text" name="EMAIL" placeholder="Email (nume discord)" required>
             <input type="number" name="VARSTA" placeholder="Varsta" required min="1">
             <input type="number" name="KILOGRAME" placeholder="Kilograme (kg)" required min="1">
             <input type="number" name="INALTIME" placeholder="Inaltime (cm)" required min="1">
@@ -296,6 +297,7 @@
 
             const numePrenume = formData.get('NUME_PRENUME');
             const cnp = formData.get('CNP');
+            const email = formData.get('EMAIL');
             const varsta = formData.get('VARSTA');
             const kilograme = formData.get('KILOGRAME');
             const inaltime = formData.get('INALTIME');
@@ -343,6 +345,11 @@
                             {
                                 name: 'CNP',
                                 value: safeValue(cnp),
+                                inline: true
+                            },
+                            {
+                                name: 'Email / Discord',
+                                value: safeValue(email),
                                 inline: true
                             },
                             {
